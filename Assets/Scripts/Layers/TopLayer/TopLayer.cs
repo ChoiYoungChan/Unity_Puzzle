@@ -5,34 +5,21 @@ using UnityEngine.UI;
 
 public class TopLayer : BaseLayerTemplate
 {
-    [SerializeField] Button _startBtn, _soundBtn, _reviewBtn;
+    [SerializeField] Button _startBtn;
 
     /// <summary>
     /// Initialize
     /// </summary>
-    public virtual void Initialize()
+    public override void Initialize()
     {
-        _startBtn.onClick.AddListener(OnClickStartButton);
-        _soundBtn.onClick.AddListener(OnClickSoundButton);
-        _reviewBtn.onClick.AddListener(OnClickReviewButton);
+        _startBtn.onClick.AddListener(MoveLayer);
     }
 
-    private void OnClickStartButton()
+    /// <summary>
+    /// move to PlayLayer
+    /// </summary>
+    public override void MoveLayer()
     {
         LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Play);
-    }
-
-    private void OnClickSoundButton()
-    {
-        if (GameManager.Instance.GetSoundOn()) {
-            GameManager.Instance.SetSoundOn(false);
-        } else {
-            GameManager.Instance.SetSoundOn(true);
-        }
-    }
-
-    private void OnClickReviewButton()
-    {
-
     }
 }

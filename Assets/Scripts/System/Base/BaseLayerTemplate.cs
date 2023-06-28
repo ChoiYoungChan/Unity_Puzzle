@@ -16,4 +16,9 @@ public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
     {
 
     }
+
+    public virtual void MoveLayer()
+    {
+
+    }
 }

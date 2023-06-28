@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Setting : BaseDialogTemplate
 {
     [SerializeField] Button _soundBtn, _shareBtn, _closeBtn;
+    [SerializeField] Sprite[] _soundSprite;
 
     // Start is called before the first frame update
     public virtual void Awake()
@@ -29,8 +30,10 @@ public class Setting : BaseDialogTemplate
     {
         if(GameManager.Instance.GetSoundOn()) {
             GameManager.Instance.SetSoundOn(false);
+            _soundBtn.GetComponent<Image>().sprite = _soundSprite[0];
         } else {
             GameManager.Instance.SetSoundOn(true);
+            _soundBtn.GetComponent<Image>().sprite = _soundSprite[1];
         }
     }
 
