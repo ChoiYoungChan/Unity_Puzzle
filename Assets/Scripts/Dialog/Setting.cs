@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Setting : BaseDialogTemplate
 {
     [SerializeField] Button _soundBtn, _shareBtn, _closeBtn;
-    [SerializeField] Sprite[] _soundSprite;
+    [SerializeField] Sprite _soundOn, _soundOff;
 
     // Start is called before the first frame update
     public virtual void Awake()
@@ -26,15 +26,28 @@ public class Setting : BaseDialogTemplate
 
     public virtual void UpdateData() { }
 
-    private void OnClickSoundBtn()
+    private void OnEnable()
     {
-        if(GameManager.Instance.GetSoundOn()) {
+        Time.timeScale = 0.0f;
+        if (GameManager.Instance.GetSoundOn()) {
             GameManager.Instance.SetSoundOn(false);
-            _soundBtn.GetComponent<Image>().sprite = _soundSprite[0];
         } else {
             GameManager.Instance.SetSoundOn(true);
-            _soundBtn.GetComponent<Image>().sprite = _soundSprite[1];
         }
+        _soundBtn.GetComponent<Image>().sprite = GameManager.Instance.GetSoundOn() ? _soundOn : _soundOff;
+        SoundManager.Instance.Play("bgm");
+    }
+
+
+    private void OnClickSoundBtn()
+    {
+        if (GameManager.Instance.GetSoundOn()) {
+            GameManager.Instance.SetSoundOn(false);
+        } else {
+            GameManager.Instance.SetSoundOn(true);
+        }
+        _soundBtn.GetComponent<Image>().sprite = GameManager.Instance.GetSoundOn() ? _soundOn : _soundOff;
+        SoundManager.Instance.Play("bgm");
     }
 
     private void OnClickShareBtn()
@@ -44,6 +57,7 @@ public class Setting : BaseDialogTemplate
     
     private void OnClickCloseBtn()
     {
+        Time.timeScale = 1.0f;
         this.gameObject.SetActive(false);
     }
 }

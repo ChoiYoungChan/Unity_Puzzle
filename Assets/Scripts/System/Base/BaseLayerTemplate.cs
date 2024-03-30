@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
 {
-    public virtual void Awake()
+    public void Awake()
     {
         Initialize();
     }

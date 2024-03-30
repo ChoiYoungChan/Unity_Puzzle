@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameManager : SingletonClass<GameManager>
 {
-    public static bool IsSoundOn, IsClear;
-    public static int HintCount;
+    public static bool _isSoundOn, _isClear;
+    public static int _hintCount;
 
     private void Awake()
     {
@@ -15,10 +15,10 @@ public class GameManager : SingletonClass<GameManager>
 
     private void InitializeData()
     {
-        IsSoundOn = true;
-        IsClear = false;
-        HintCount = 0;
-        SetSoundOn(IsSoundOn);
+        _isSoundOn = true;
+        _isClear = false;
+        _hintCount = 0;
+        SetSoundOn(_isSoundOn);
     }
 
     private void Start()
@@ -28,33 +28,33 @@ public class GameManager : SingletonClass<GameManager>
 
     public void SetSoundOn(bool _isActive)
     {
-        IsSoundOn = _isActive;
-        CacheData.Instance.SoundOn = IsSoundOn;
+        _isSoundOn = _isActive;
+        CacheData.Instance.SoundOn = _isSoundOn;
     }
 
     public bool GetSoundOn()
     {
-        return IsSoundOn;
+        return _isSoundOn;
     }
 
     public void SetIsClear(bool _isActive)
     {
-        IsClear = _isActive;
+        _isClear = _isActive;
     }
 
     public bool GetIsClear()
     {
-        return IsClear;
+        return _isClear;
     }
 
     public void SetHintCount(int _count)
     {
-        HintCount = _count;
-        CacheData.Instance.HintCount = HintCount;
+        _hintCount = _count;
+        CacheData.Instance.HintCount = _hintCount;
     }
 
     public int GetHintCount()
     {
-        return HintCount;
+        return _hintCount;
     }
 }
