@@ -14,7 +14,11 @@ public class SoundManager : SingletonClass<SoundManager>
         [Range(0, 1)] public float volume;
     }
 
-    public enum SoundType { SoundEffect, Music }
+    public enum SoundType 
+    {
+        SoundEffect = 0,
+        Music = 1 
+    }
 
     [SerializeField] SoundInfo[] _soundInfos;
     Dictionary<string, SoundInfo> _soundInfoDict = new Dictionary<string, SoundInfo>();
@@ -31,7 +35,7 @@ public class SoundManager : SingletonClass<SoundManager>
 
     public void Play(string id)
     {
-        if (!GameManager.Instance.GetSoundOn()) return;
+        if (!GameManager.Instance.IsSoundOn) return;
 
         AudioSource audioSource = GetAudioSource(id);
         SoundInfo soundInfo = _soundInfoDict[id];
@@ -43,8 +47,7 @@ public class SoundManager : SingletonClass<SoundManager>
         audioSource.Play();
 
         // ループでなければ、Destroyの予約をする
-        if (!_soundInfoDict[id].loop)
-            StartCoroutine(FinishPlayback_Coroutine(audioSource));
+        if (!_soundInfoDict[id].loop) StartCoroutine(FinishPlayback_Coroutine(audioSource));
     }
 
     public void Pause()
@@ -61,7 +64,7 @@ public class SoundManager : SingletonClass<SoundManager>
         if (_soundInfoDict[id].loop && _loopingAudioSourceDict.ContainsKey(id))
             return _loopingAudioSourceDict[id];
 
-        print("### SoundId : " + id);
+        Debug.Log("### SoundId : " + id);
 
         GameObject obj = new GameObject("sound_" + id);
         obj.transform.SetParent(transform);

@@ -8,19 +8,29 @@ public class LayerManager : SingletonClass<LayerManager>
 
     public enum LayerKey {
         LayerKey_Top = 0,
-        LayerKey_Play = 1,
-        LayerKey_Result = 2,
-        LayerKey_Max = 3
+        LayerKey_Select = 1,
+        LayerKey_Play = 2,
+        LayerKey_Result = 3,
+        LayerKey_Max = 4
     }
 
-    public void MoveLayer(LayerKey _key)
+    public void MoveLayer(LayerKey key)
     {
         for(int count = 0; count < _layerList.Length; count++) {
-            if((count == (int)_key)) {
-                _layerList[count].gameObject.SetActive(true);
+            if((count == (int)key)) {
+                _layerList[count].SetActive(true);
             } else {
-                _layerList[count].gameObject.SetActive(false);
+                _layerList[count].SetActive(false);
             }
         }
+    }
+
+    public GameObject GetLayer(LayerKey key)
+    {
+        for (int count = 0; count < _layerList.Length; count++)
+        {
+            if ((count == (int)key)) return _layerList[count];
+        }
+        return null;
     }
 }

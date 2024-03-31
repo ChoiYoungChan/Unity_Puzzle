@@ -20,6 +20,6 @@ public class TopLayer : BaseLayerTemplate
     /// </summary>
     public override void MoveLayer()
     {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Play);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Select);
     }
 }

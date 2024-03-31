@@ -5,10 +5,56 @@ using UnityEngine.UI;
 
 public class Setting : BaseDialogTemplate
 {
+    #region Inspector
     [SerializeField] Button _soundBtn, _shareBtn, _closeBtn;
     [SerializeField] Sprite _soundOn, _soundOff;
 
-    // Start is called before the first frame update
+    #endregion
+
+    #region Private Method
+    private void OnEnable()
+    {
+        Time.timeScale = 0.0f;
+        if (GameManager.Instance.IsSoundOn)
+        {
+            GameManager.Instance.IsSoundOn = false;
+        }
+        else
+        {
+            GameManager.Instance.IsSoundOn = true;
+        }
+        _soundBtn.GetComponent<Image>().sprite = GameManager.Instance.IsSoundOn ? _soundOn : _soundOff;
+        SoundManager.Instance.Play("bgm");
+    }
+
+
+    private void OnClickSoundBtn()
+    {
+        if (GameManager.Instance.IsSoundOn)
+        {
+            GameManager.Instance.IsSoundOn = false;
+        }
+        else
+        {
+            GameManager.Instance.IsSoundOn = true;
+        }
+        _soundBtn.GetComponent<Image>().sprite = (GameManager.Instance.IsSoundOn == true) ? _soundOn : _soundOff;
+        SoundManager.Instance.Play("bgm");
+    }
+
+    private void OnClickShareBtn()
+    {
+
+    }
+
+    private void OnClickCloseBtn()
+    {
+        Time.timeScale = 1.0f;
+        this.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region Public Method
     public virtual void Awake()
     {
         Initialize();
@@ -26,39 +72,6 @@ public class Setting : BaseDialogTemplate
 
     public virtual void UpdateData() { }
 
-    private void OnEnable()
-    {
-        Time.timeScale = 0.0f;
-        if (GameManager.Instance.GetSoundOn()) {
-            GameManager.Instance.SetSoundOn(false);
-        } else {
-            GameManager.Instance.SetSoundOn(true);
-        }
-        _soundBtn.GetComponent<Image>().sprite = GameManager.Instance.GetSoundOn() ? _soundOn : _soundOff;
-        SoundManager.Instance.Play("bgm");
-    }
-
-
-    private void OnClickSoundBtn()
-    {
-        if (GameManager.Instance.GetSoundOn()) {
-            GameManager.Instance.SetSoundOn(false);
-        } else {
-            GameManager.Instance.SetSoundOn(true);
-        }
-        _soundBtn.GetComponent<Image>().sprite = GameManager.Instance.GetSoundOn() ? _soundOn : _soundOff;
-        SoundManager.Instance.Play("bgm");
-    }
-
-    private void OnClickShareBtn()
-    {
-
-    }
-    
-    private void OnClickCloseBtn()
-    {
-        Time.timeScale = 1.0f;
-        this.gameObject.SetActive(false);
-    }
+    #endregion
 }
 

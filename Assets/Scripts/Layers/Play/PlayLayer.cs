@@ -6,10 +6,62 @@ using UnityEngine.UI;
 
 public class PlayLayer : BaseLayerTemplate
 {
-    [SerializeField] Button _backBtn, _settingBtn;
-    [SerializeField] GameObject[] _puzzleObj;
-    private int DragCount;
-    private bool _isClear;
+    #region Enum
+    public enum PuzzleType
+    {
+        Sliding = 0,
+        JigSaw = 1
+    }
+    #endregion
+
+    #region Inspector
+
+    [SerializeField] private Button _backBtn, _settingBtn;
+    [SerializeField] private Text _stagenameText;
+    [SerializeField] private BaseLayerTemplate[] _puzzleObj;
+
+    #endregion
+
+    #region Public Field
+
+    public PuzzleType Type { get; set; } = PuzzleType.Sliding;
+
+    #endregion
+
+    #region Private Method
+    private void Start()
+    {
+        string stageText = "";
+        switch (Type)
+        {
+            case PuzzleType.JigSaw:
+                stageText = "JigSaw Puzzle";
+                _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(true);
+                _puzzleObj[(int)PuzzleType.JigSaw].Initialize();
+                break;
+
+            case PuzzleType.Sliding:
+                stageText = "Sliding Puzzle";
+                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
+                _puzzleObj[(int)PuzzleType.Sliding].Initialize();
+                break;
+            default:
+                stageText = "Sliding Puzzle";
+                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
+                _puzzleObj[(int)PuzzleType.Sliding].Initialize();
+                break;
+        }
+        _stagenameText.text = stageText;
+    }
+
+    private void OnClickBackButton()
+    {
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Select);
+    }
+
+    #endregion
+
+    #region Public Method
 
     /// <summary>
     /// Initialize
@@ -20,43 +72,6 @@ public class PlayLayer : BaseLayerTemplate
         _settingBtn.onClick.AddListener(() => { DialogManager.Instance.OpenDialog(DialogManager.DialogKey.DialogKey_Setting); });
     }
 
-    private void Start()
-    {
-        DragCount = 0;
+    #endregion
 
-    }
-
-    private void OnClickBackButton()
-    {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
-    }
-
-    private void MoveResultLayer()
-    {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Result);
-    }
-
-    private void InitializePuzzle()
-    {
-
-    }
-
-    private void UpdatePuzzleBlock()
-    {
-
-    }
-
-    private void MovePuzzleBlock()
-    {
-
-    }
-
-    /// <summary>
-    /// check result like game clear or game fail
-    /// </summary>
-    private void CheckResult()
-    {
-        GameManager.Instance.SetIsClear(_isClear);
-        MoveResultLayer();
-    }
 }

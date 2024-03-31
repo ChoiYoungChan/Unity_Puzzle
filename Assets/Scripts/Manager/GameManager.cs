@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GameManager : SingletonClass<GameManager>
 {
-    public static bool _isSoundOn, _isClear;
-    public static int _hintCount;
+    #region Properties
+    public bool IsSoundOn { get; set; }
+    public bool IsClear { get; set; }
+    public int PuzzleMode { get; set; }
+    #endregion
 
+    #region Private Method
     private void Awake()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -15,46 +19,14 @@ public class GameManager : SingletonClass<GameManager>
 
     private void InitializeData()
     {
-        _isSoundOn = true;
-        _isClear = false;
-        _hintCount = 0;
-        SetSoundOn(_isSoundOn);
+        IsSoundOn = true;
+        IsClear = false;
+        CacheData.Instance.SoundOn = IsSoundOn;
     }
 
     private void Start()
     {
         LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
     }
-
-    public void SetSoundOn(bool _isActive)
-    {
-        _isSoundOn = _isActive;
-        CacheData.Instance.SoundOn = _isSoundOn;
-    }
-
-    public bool GetSoundOn()
-    {
-        return _isSoundOn;
-    }
-
-    public void SetIsClear(bool _isActive)
-    {
-        _isClear = _isActive;
-    }
-
-    public bool GetIsClear()
-    {
-        return _isClear;
-    }
-
-    public void SetHintCount(int _count)
-    {
-        _hintCount = _count;
-        CacheData.Instance.HintCount = _hintCount;
-    }
-
-    public int GetHintCount()
-    {
-        return _hintCount;
-    }
+    #endregion
 }
