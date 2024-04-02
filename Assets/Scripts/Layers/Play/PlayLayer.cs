@@ -37,17 +37,20 @@ public class PlayLayer : BaseLayerTemplate
             case PuzzleType.JigSaw:
                 stageText = "JigSaw Puzzle";
                 _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(true);
+                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(false);
                 _puzzleObj[(int)PuzzleType.JigSaw].Initialize();
                 break;
 
             case PuzzleType.Sliding:
                 stageText = "Sliding Puzzle";
                 _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
+                _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(false);
                 _puzzleObj[(int)PuzzleType.Sliding].Initialize();
                 break;
             default:
                 stageText = "Sliding Puzzle";
                 _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
+                _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(false);
                 _puzzleObj[(int)PuzzleType.Sliding].Initialize();
                 break;
         }
@@ -56,6 +59,7 @@ public class PlayLayer : BaseLayerTemplate
 
     private void OnClickBackButton()
     {
+        SoundManager.Instance.Play("button_click");
         LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Select);
     }
 

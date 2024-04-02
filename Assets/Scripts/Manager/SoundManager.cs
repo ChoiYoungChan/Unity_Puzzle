@@ -60,7 +60,6 @@ public class SoundManager : SingletonClass<SoundManager>
 
     AudioSource GetAudioSource(string id)
     {
-        // Loopの場合は、AudioSourceがあれば返す。なければ作って登録。
         if (_soundInfoDict[id].loop && _loopingAudioSourceDict.ContainsKey(id))
             return _loopingAudioSourceDict[id];
 

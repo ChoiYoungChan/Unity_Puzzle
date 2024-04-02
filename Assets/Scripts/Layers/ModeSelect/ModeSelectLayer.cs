@@ -10,12 +10,6 @@ public class ModeSelectLayer : BaseLayerTemplate
     [SerializeField] private Button _backBtn;
     [SerializeField] private Button _slidingBtn;
     [SerializeField] private Button _jigsawBtn;
-
-    #endregion
-
-    #region Private Field
-
-
     #endregion
 
     #region Private Method

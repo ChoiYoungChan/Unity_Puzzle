@@ -15,14 +15,6 @@ public class Setting : BaseDialogTemplate
     private void OnEnable()
     {
         Time.timeScale = 0.0f;
-        if (GameManager.Instance.IsSoundOn)
-        {
-            GameManager.Instance.IsSoundOn = false;
-        }
-        else
-        {
-            GameManager.Instance.IsSoundOn = true;
-        }
         _soundBtn.GetComponent<Image>().sprite = GameManager.Instance.IsSoundOn ? _soundOn : _soundOff;
         SoundManager.Instance.Play("bgm");
     }
@@ -33,13 +25,15 @@ public class Setting : BaseDialogTemplate
         if (GameManager.Instance.IsSoundOn)
         {
             GameManager.Instance.IsSoundOn = false;
+            SoundManager.Instance.Pause();
         }
         else
         {
             GameManager.Instance.IsSoundOn = true;
+            SoundManager.Instance.Play("bgm");
         }
+
         _soundBtn.GetComponent<Image>().sprite = (GameManager.Instance.IsSoundOn == true) ? _soundOn : _soundOff;
-        SoundManager.Instance.Play("bgm");
     }
 
     private void OnClickShareBtn()
@@ -63,14 +57,14 @@ public class Setting : BaseDialogTemplate
     /// <summary>
     /// Initialize
     /// </summary>
-    public virtual void Initialize()
+    public override void Initialize()
     {
         _soundBtn.onClick.AddListener(OnClickSoundBtn);
         _shareBtn.onClick.AddListener(OnClickShareBtn);
         _closeBtn.onClick.AddListener(OnClickCloseBtn);
     }
 
-    public virtual void UpdateData() { }
+    public override void UpdateData() { }
 
     #endregion
 }

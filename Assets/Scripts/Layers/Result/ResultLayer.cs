@@ -24,11 +24,13 @@ public class ResultLayer : BaseLayerTemplate
 
     private void OnClickNextButton()
     {
+        SoundManager.Instance.Play("button_click");
         LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Play);
     }
 
     private void OnClickBackButton()
     {
+        SoundManager.Instance.Play("button_click");
         LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
     }
 

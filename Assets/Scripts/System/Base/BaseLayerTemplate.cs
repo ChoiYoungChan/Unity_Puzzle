@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
 {
+    #region Inspector
+    [Header("¡¼Layer Settings¡½")]
+    [SerializeField] float _fadeTime = 0;
+    #endregion
+
+    #region Private Fields
     public void Awake()
     {
         Initialize();
@@ -21,4 +27,5 @@ public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
     {
 
     }
+    #endregion
 }

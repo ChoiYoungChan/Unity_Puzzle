@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public class Fade : MonoBehaviour
+public class Fade : BaseLayerTemplate
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region PrivateFields
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] Image _bgImage;
+
+    #endregion
+
+    #region Public Method
+
+    public void CrossFade()
     {
-        
+        transform.SetAsLastSibling();
+        _bgImage.enabled = true;
+        _bgImage.raycastTarget = true;
+        DOTween.Sequence()
+            .Append(_bgImage.DOFade(1.0f, LayerManager.Instance.FadeTime))
+            .AppendInterval(1.0f)
+            .Append(_bgImage.DOFade(0, LayerManager.Instance.FadeTime))
+            .AppendCallback(() => { _bgImage.raycastTarget = false; });
     }
+    #endregion
 }
