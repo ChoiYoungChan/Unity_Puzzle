@@ -20,6 +20,8 @@ public class SlidingPuzzle : BaseLayerTemplate
     public Vector3 EmptyTilePosition { get; set; }
     public int PlayTime { get; private set; } = 0;
     public int MoveCount { get; private set; } = 0;
+
+    public int Difficulty { get; set; } = 6;
     #endregion
 
     #region Private Method
@@ -93,7 +95,7 @@ public class SlidingPuzzle : BaseLayerTemplate
     public override void Initialize()
     {
         base.Initialize();
-
+        _puzzleSize = new Vector2Int(Difficulty, Difficulty);
     }
 
     public void MoveTile(Tile tile)

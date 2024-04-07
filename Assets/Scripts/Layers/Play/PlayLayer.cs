@@ -29,7 +29,7 @@ public class PlayLayer : BaseLayerTemplate
     #endregion
 
     #region Private Method
-    private void Start()
+    private void OnEnable()
     {
         string stageText = "";
         switch (Type)
@@ -43,14 +43,14 @@ public class PlayLayer : BaseLayerTemplate
 
             case PuzzleType.Sliding:
                 stageText = "Sliding Puzzle";
-                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(false);
+                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.Sliding].Initialize();
                 break;
             default:
                 stageText = "Sliding Puzzle";
-                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(false);
+                _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.Sliding].Initialize();
                 break;
         }
@@ -73,7 +73,9 @@ public class PlayLayer : BaseLayerTemplate
     public override void Initialize()
     {
         _backBtn.onClick.AddListener(OnClickBackButton);
-        _settingBtn.onClick.AddListener(() => { DialogManager.Instance.OpenDialog(DialogManager.DialogKey.DialogKey_Setting); });
+        _settingBtn.onClick.AddListener(() => {
+            DialogManager.Instance.OpenDialog(DialogManager.DialogKey.DialogKey_Setting);
+        });
     }
 
     #endregion
