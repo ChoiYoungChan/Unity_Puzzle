@@ -8,6 +8,13 @@ public class GameManager : SingletonClass<GameManager>
     public bool IsSoundOn { get; set; }
     public bool IsClear { get; set; }
     public int PuzzleMode { get; set; }
+    public bool isPlaying { get; set; }
+    public int SelectStageNumber { get; set; }
+    public bool IsRetry { get; set; }
+    public bool IsNext { get; set; }
+
+    public StageData[] PlayData;
+
     #endregion
 
     #region Private Method
@@ -27,6 +34,15 @@ public class GameManager : SingletonClass<GameManager>
     private void Start()
     {
         LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
+    }
+    #endregion
+
+    #region Public Method
+
+    public void GetGameData()
+    {
+        var data = RemoteDataManager.Instance.GetData();
+        PlayData = data;
     }
     #endregion
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ResultLayer : BaseLayerTemplate
 {
     #region Inspector
-    [SerializeField] Button _nextBtn, _backBtn;
+    [SerializeField] Button _nextBtn, _backBtn, _rankingBtn;
     [SerializeField] Image _resultImg;
     [SerializeField] Sprite[] _resultSprite;
     #endregion
@@ -52,6 +52,7 @@ public class ResultLayer : BaseLayerTemplate
     {
         _nextBtn?.onClick.AddListener(OnClickNextButton);
         _backBtn?.onClick.AddListener(OnClickBackButton);
+        _rankingBtn?.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.DialogKey_Ranking); });
     }
 
     public virtual void OnEnable()
@@ -64,6 +65,7 @@ public class ResultLayer : BaseLayerTemplate
         ShowResultImage();
         ShowResultEffect();
     }
+
     public void StartShakeEffect()
     {
         if (_shakeTimer > 0)
@@ -77,6 +79,11 @@ public class ResultLayer : BaseLayerTemplate
             _resultImg.transform.localPosition = Vector3.zero;
             canShake = false;
         }
+    }
+
+    public override void OpenDialog(DialogManager.DialogKey _key)
+    {
+        DialogManager.Instance.OpenDialog(_key);
     }
 
     #endregion

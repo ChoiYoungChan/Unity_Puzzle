@@ -9,7 +9,9 @@ public class DialogManager : SingletonClass<DialogManager>
     public enum DialogKey {
         DialogKey_Setting = 0,
         DialogKey_Hint = 1,
-        DialogKey_Max = 2
+        DialogKey_LogIn = 2,
+        DialogKey_Ranking = 3,
+        DialogKey_Max = 4
     }
 
     // Start is called before the first frame update

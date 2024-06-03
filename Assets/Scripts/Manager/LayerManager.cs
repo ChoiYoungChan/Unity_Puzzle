@@ -16,14 +16,21 @@ public class LayerManager : SingletonClass<LayerManager>
     #endregion
 
     #region Inspector
-    [SerializeField] GameObject[] _layerList;
+    [SerializeField] BaseLayerTemplate[] _layerList;
     [SerializeField] Fade _fade;
+    [SerializeField] Canvas _targetCanvas;
     #endregion
 
     #region Public FIeld
     public Fade Fade { get { return _fade; } set { _fade = value; } }
 
     public float FadeTime { get; set; }
+
+    public Canvas TargetCanvas
+    {
+        get { return _targetCanvas; }
+    }
+
     #endregion
 
 
@@ -33,14 +40,14 @@ public class LayerManager : SingletonClass<LayerManager>
         _fade.CrossFade();
         for (int count = 0; count < _layerList.Length; count++) {
             if((count == (int)key)) {
-                _layerList[count].SetActive(true);
+                _layerList[count].gameObject.SetActive(true);
             } else {
-                _layerList[count].SetActive(false);
+                _layerList[count].gameObject.SetActive(false);
             }
         }
     }
 
-    public GameObject GetLayer(LayerKey key)
+    public BaseLayerTemplate GetLayer(LayerKey key)
     {
         for (int count = 0; count < _layerList.Length; count++)
         {

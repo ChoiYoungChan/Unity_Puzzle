@@ -27,5 +27,10 @@ public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
     {
 
     }
+
+    public virtual void OpenDialog(DialogManager.DialogKey _key)
+    {
+
+    }
     #endregion
 }
