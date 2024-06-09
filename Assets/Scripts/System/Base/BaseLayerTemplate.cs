@@ -10,7 +10,7 @@ public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
     #endregion
 
     #region Private Fields
-    public void Awake()
+    public virtual void Awake()
     {
         Initialize();
     }

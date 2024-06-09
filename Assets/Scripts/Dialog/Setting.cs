@@ -49,7 +49,7 @@ public class Setting : BaseDialogTemplate
     #endregion
 
     #region Public Method
-    public virtual void Awake()
+    public override void Awake()
     {
         Initialize();
     }
