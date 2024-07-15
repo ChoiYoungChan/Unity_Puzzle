@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class TopLayer : BaseLayerTemplate
+public class TopLayer : BaseLayer
 {
     #region inspector
     [SerializeField] Button _startBtn;
@@ -48,9 +48,9 @@ public class TopLayer : BaseLayerTemplate
     {
         SoundManager.Instance.Play("bgm");
 
-        _startBtn.onClick.AddListener(FlickFastButton);
-        _settingBtn.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.DialogKey_Setting); });
-        _loginBtn.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.DialogKey_LogIn); });
+        _startBtn.onClick.AddListener(()=> { LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Select); });
+        _settingBtn.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.Setting); });
+        _loginBtn.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.LogIn); });
 
         _tempColor = _btnImage.color;
     }
@@ -60,7 +60,7 @@ public class TopLayer : BaseLayerTemplate
     /// </summary>
     public override void MoveLayer()
     {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Select);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Select);
     }
 
     public override void OpenDialog(DialogManager.DialogKey key)

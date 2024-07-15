@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RotatePuzzle : BaseLayerTemplate
+public class RotatePuzzle : BaseLayer
 {
     #region Inspector
     [Header("UI")]
@@ -78,7 +78,7 @@ public class RotatePuzzle : BaseLayerTemplate
     {
         base.Initialize();
         // Set Data
-        _stage = GameManager.Instance.PlayData[GameManager.Instance.SelectStageNumber];
+        //_stage = GameManager.Instance.PlayData[GameManager.Instance.SelectStageNumber];
 
         IsLongTap = false;
         IsTap = false;
@@ -121,22 +121,21 @@ public class RotatePuzzle : BaseLayerTemplate
 
     void SetStageImage()
     {
-        Sprite stageillust = Resources.Load<Sprite>("illust/stage/" + _stage.Section[0].AnswerImage.Replace(".png", ""));
+        var stageImageName = CacheData.Instance.CurrentStage.ToString("D3");
+        Debug.Log("#### Stage Image Name : " + stageImageName);
+        Sprite stageillust = Resources.Load<Sprite>("illust/stage/" + stageImageName.Replace(".png", ""));
         _stageImage.GetComponent<Image>().sprite = stageillust;
     }
 
     void CreatePazzle()
     {
-        _splitWidth = _stage.Section[0].SliceNum;
-        _splitHeight = _stage.Section[0].SliceNum;
+        _splitWidth = 4;
+        _splitHeight = 4;
         _maxPazzle = _splitWidth * _splitHeight;
 
-        if (_puzzleList.Count != 0)
-        {
-            for (int i = 0; i < _puzzleList.Count; i++)
-            {
-                Destroy(_puzzleList[i]);
-            }
+        if (_puzzleList.Count != 0) {
+            for (int i = 0; i < _puzzleList.Count; i++) Destroy(_puzzleList[i]);
+
             _puzzleList.Clear();
         }
 
@@ -148,12 +147,10 @@ public class RotatePuzzle : BaseLayerTemplate
 
         _stageImage.GetComponent<GridLayoutGroup>().cellSize = pazzleSize;
 
-        for (int i = 0; i < _splitHeight; i++)
-        {
-            for (int j = 0; j < _splitWidth; j++)
-            {
+        for (int height = 0; height < _splitHeight; height++) {
+            for (int width = 0; width < _splitWidth; width++) {
                 _rotate_rate = UnityEngine.Random.Range(1, 3);
-                Vector2 pazzlePosition = new Vector2((pazzleWidth * j), (pazzleHeight * i));
+                Vector2 pazzlePosition = new Vector2((pazzleWidth * width), (pazzleHeight * height));
                 GameObject obj = Instantiate(_clonebase, _stageImage.transform);
                 obj.GetComponent<Puzzle>().Setup(_stageImage.GetComponent<Image>().sprite.texture, pazzlePosition, Quaternion.Euler(0, 0, -(90 * _rotate_rate)), pazzleSize);
                 _puzzleList.Add(obj);
@@ -165,8 +162,7 @@ public class RotatePuzzle : BaseLayerTemplate
     public void NextPazzle()
     {
         _pazzleCount++;
-        if (_pazzleCount < _maxPazzle)
-        {
+        if (_pazzleCount < _maxPazzle) {
             _puzzleList[_pazzleCount].SetActive(true);
             _puzzleList[_pazzleCount].transform.SetAsLastSibling();
         } else {
@@ -177,16 +173,11 @@ public class RotatePuzzle : BaseLayerTemplate
     public void CheckAnswer()
     {
         int clear_count = 0;
-        for (int count = 0; count < _puzzleList.Count; count++)
-        {
-            if (_puzzleList[count].gameObject.transform.rotation == Quaternion.Euler(0, 0, 0))
-            {
-                clear_count++;
-            }
+        for (int count = 0; count < _puzzleList.Count; count++) {
+            if (_puzzleList[count].gameObject.transform.rotation == Quaternion.Euler(0, 0, 0)) clear_count++;
         }
 
-        if (clear_count == _puzzleList.Count)
-        {
+        if (clear_count == _puzzleList.Count) {
             GameManager.Instance.IsClear = true;
             Invoke("ShowResultLayer", 0.5f);
         }
@@ -198,12 +189,11 @@ public class RotatePuzzle : BaseLayerTemplate
         _tutorialDialog.SetActive(false);
 
         int value = Convert.ToInt32(true);
-        PlayerPrefs.SetInt("is_tutorial_played", value);
-        PlayerPrefs.Save();
+        CacheData.Instance.Tutorial = true;
     }
 
     public void ShowResultLayer()
     {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Result);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Result);
     }
 }

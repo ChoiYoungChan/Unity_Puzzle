@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ModeSelectLayer : BaseLayerTemplate
+public class ModeSelectLayer : BaseLayer
 {
     #region Inspector
 
@@ -21,15 +21,15 @@ public class ModeSelectLayer : BaseLayerTemplate
 
     private void OnClickBackButton()
     {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Top);
     }
 
     private void OnClickStageButton(PlayLayer.PuzzleType type)
     {
-        GameObject layerobj = LayerManager.Instance.GetLayer(LayerManager.LayerKey.LayerKey_Play).gameObject;
+        GameObject layerobj = LayerManager.Instance.GetLayer(LayerManager.LayerKey.Play).gameObject;
         layerobj.GetComponent<PlayLayer>().Type = type;
 
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Play);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Play);
     }
 
     #endregion
@@ -44,7 +44,7 @@ public class ModeSelectLayer : BaseLayerTemplate
         _backBtn?.onClick.AddListener(OnClickBackButton);
         _slidingBtn?.onClick.AddListener(() => { OnClickStageButton(PlayLayer.PuzzleType.Sliding); });
         _jigsawBtn?.onClick.AddListener(() => { OnClickStageButton(PlayLayer.PuzzleType.JigSaw); });
-        _rankingBtn?.onClick.AddListener(() => { OpenDialog(DialogManager.DialogKey.DialogKey_Ranking); });
+        _rankingBtn?.onClick.AddListener(() => { OpenDialog(DialogManager.DialogKey.Ranking); });
     }
 
     public override void OpenDialog(DialogManager.DialogKey _key)

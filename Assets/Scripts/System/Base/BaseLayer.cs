@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseLayerTemplate : SingletonClass<BaseLayerTemplate>
+public class BaseLayer : MonoBehaviour
 {
     #region Inspector
     [Header("¡¼Layer Settings¡½")]

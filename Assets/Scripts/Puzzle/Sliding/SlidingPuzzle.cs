@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlidingPuzzle : BaseLayerTemplate
+public class SlidingPuzzle : BaseLayer
 {
     #region Private Field
     [SerializeField] Transform _tileParent;
@@ -120,7 +120,7 @@ public class SlidingPuzzle : BaseLayerTemplate
         {
             GameManager.Instance.IsClear = true;
             StopCoroutine("CalculatePlaytime");
-            LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Result);
+            LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Result);
         }
     }
     #endregion

@@ -2,27 +2,36 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Collections;
 
-public class Loading : MonoBehaviour
+public class Loading : BaseLayer
 {
     private bool _isDone;
     // Start is called before the first frame update
     private async void  Start()
     {
-        await UniTask.WhenAll(LoadGameData(), MoveTo());
+        //await UniTask.WhenAll(LoadGameData(), LoadPlayerData());
+        await LoadGameData();
+
+        MoveLayer();
     }
 
-    private async UniTask MoveTo()
+    private async UniTask LoadPlayerData()
     {
-        _ = UniTask.WaitUntil(() => _isDone == true);
-
         await UniTask.Delay(3000);
-        Debug.Log("## Move Top Layer");
+        Debug.Log("## LoadPlayerData");
     }
 
     private async UniTask LoadGameData()
     {
-        await UniTask.Delay(3000); 
-        Debug.Log("## Start Load Game Data from Server");
+        await UniTask.Delay(1000); 
+        Debug.Log("## Load Game Data");
         _isDone = true;
+    }
+
+    public override void MoveLayer()
+    {
+        //_ = UniTask.WaitUntil(() => _isDone == true);
+
+        Debug.Log("## Move TopLayer");
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Top);
     }
 }

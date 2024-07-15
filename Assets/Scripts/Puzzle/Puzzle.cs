@@ -48,7 +48,7 @@ public class Puzzle : MonoBehaviour
         GetComponent<RectTransform>().rotation *= Quaternion.Euler(0, 0, 90);
         if (GetComponent<RectTransform>().rotation == Quaternion.Euler(0, 0, 0))
         {
-            RotatePuzzle play = LayerManager.Instance.GetLayer(LayerManager.LayerKey.LayerKey_Play) as RotatePuzzle;
+            RotatePuzzle play = LayerManager.Instance.GetLayer(LayerManager.LayerKey.Play) as RotatePuzzle;
             play.CheckAnswer();
         }
     }

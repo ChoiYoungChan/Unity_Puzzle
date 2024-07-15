@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Fade : BaseLayerTemplate
+public class Fade : BaseLayer
 {
     #region PrivateFields
 

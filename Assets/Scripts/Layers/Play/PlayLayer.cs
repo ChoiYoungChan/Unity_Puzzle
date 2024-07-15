@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayLayer : BaseLayerTemplate
+public class PlayLayer : BaseLayer
 {
     #region Enum
     public enum PuzzleType
@@ -17,9 +17,14 @@ public class PlayLayer : BaseLayerTemplate
     #region Inspector
 
     [SerializeField] private Button _backBtn, _settingBtn;
-    [SerializeField] private Text _stagenameText;
-    [SerializeField] private BaseLayerTemplate[] _puzzleObj;
+    [SerializeField] private Text _infoText;
+    [SerializeField] private BaseLayer[] _puzzleObj;
 
+    #endregion
+
+    #region Private Field
+    private string _stringFormat;
+    private string _stagetype;
     #endregion
 
     #region Public Field
@@ -28,39 +33,42 @@ public class PlayLayer : BaseLayerTemplate
 
     #endregion
 
+    private void Awake()
+    {
+        _stringFormat = _infoText.text;
+    }
+
     #region Private Method
     private void OnEnable()
     {
-        string stageText = "";
         switch (Type)
         {
             case PuzzleType.JigSaw:
-                stageText = "JigSaw Puzzle";
                 _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(false);
                 _puzzleObj[(int)PuzzleType.JigSaw].Initialize();
+                _stagetype = "JigSaw Puzzle";
                 break;
 
             case PuzzleType.Sliding:
-                stageText = "Sliding Puzzle";
                 _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(false);
                 _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.Sliding].Initialize();
+                _stagetype = "Sliding Puzzle";
                 break;
             default:
-                stageText = "Sliding Puzzle";
                 _puzzleObj[(int)PuzzleType.JigSaw].gameObject.SetActive(false);
                 _puzzleObj[(int)PuzzleType.Sliding].gameObject.SetActive(true);
                 _puzzleObj[(int)PuzzleType.Sliding].Initialize();
+                _stagetype = "Sliding Puzzle";
                 break;
         }
-        _stagenameText.text = stageText;
     }
 
     private void OnClickBackButton()
     {
         SoundManager.Instance.Play("button_click");
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Select);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Select);
     }
 
     #endregion
@@ -74,8 +82,15 @@ public class PlayLayer : BaseLayerTemplate
     {
         _backBtn.onClick.AddListener(OnClickBackButton);
         _settingBtn.onClick.AddListener(() => {
-            DialogManager.Instance.OpenDialog(DialogManager.DialogKey.DialogKey_Setting);
+            DialogManager.Instance.OpenDialog(DialogManager.DialogKey.Setting);
         });
+    }
+
+    public void UpdateTimer()
+    {
+        // Timer
+
+        _infoText.text = string.Format(_stringFormat, "", "");
     }
 
     #endregion

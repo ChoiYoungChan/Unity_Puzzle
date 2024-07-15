@@ -31,10 +31,6 @@ public class GameManager : SingletonClass<GameManager>
         CacheData.Instance.SoundOn = IsSoundOn;
     }
 
-    private void Start()
-    {
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
-    }
     #endregion
 
     #region Public Method

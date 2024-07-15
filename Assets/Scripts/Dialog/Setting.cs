@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Setting : BaseDialogTemplate
+public class Setting : BaseDialog
 {
     #region Inspector
     [SerializeField] Button _soundBtn, _shareBtn, _closeBtn;
@@ -44,7 +44,7 @@ public class Setting : BaseDialogTemplate
     private void OnClickCloseBtn()
     {
         Time.timeScale = 1.0f;
-        this.gameObject.SetActive(false);
+        DialogManager.Instance.HideDialog(DialogManager.DialogKey.Setting);
     }
     #endregion
 
@@ -59,12 +59,12 @@ public class Setting : BaseDialogTemplate
     /// </summary>
     public override void Initialize()
     {
+        base.Initialize();
+
         _soundBtn.onClick.AddListener(OnClickSoundBtn);
         _shareBtn.onClick.AddListener(OnClickShareBtn);
         _closeBtn.onClick.AddListener(OnClickCloseBtn);
     }
-
-    public override void UpdateData() { }
 
     #endregion
 }

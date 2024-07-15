@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,17 @@ public class LayerManager : SingletonClass<LayerManager>
     #region Enum
     public enum LayerKey
     {
-        LayerKey_Top = 0,
-        LayerKey_Select = 1,
-        LayerKey_Play = 2,
-        LayerKey_Result = 3,
-        LayerKey_Max = 4
+        Loading = 0,
+        Top = 1,
+        Select = 2,
+        Play = 3,
+        Result = 4,
+        Max = 5
     }
     #endregion
 
     #region Inspector
-    [SerializeField] BaseLayerTemplate[] _layerList;
+    [SerializeField] BaseLayer[] _layerList;
     [SerializeField] Fade _fade;
     [SerializeField] Canvas _targetCanvas;
     #endregion
@@ -37,17 +39,18 @@ public class LayerManager : SingletonClass<LayerManager>
     #region Public Method
     public void MoveLayer(LayerKey key)
     {
-        _fade.CrossFade();
         for (int count = 0; count < _layerList.Length; count++) {
-            if((count == (int)key)) {
+            if (count.Equals((int)key)) {
                 _layerList[count].gameObject.SetActive(true);
+                var layer = _layerList[count] as BaseLayer;
+                layer.Initialize();
             } else {
                 _layerList[count].gameObject.SetActive(false);
             }
         }
     }
 
-    public BaseLayerTemplate GetLayer(LayerKey key)
+    public BaseLayer GetLayer(LayerKey key)
     {
         for (int count = 0; count < _layerList.Length; count++)
         {

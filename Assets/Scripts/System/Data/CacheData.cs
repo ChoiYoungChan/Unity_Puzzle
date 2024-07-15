@@ -9,9 +9,13 @@ public class CacheData : SingletonClass<CacheData>
     {
         FirstOpen,
         HintCount,
+        CurrentStage,
+        LastStage,
         SoundOn,
         Tutorial,
-        StartCountdown
+        StartCountdown,
+        ID,
+        Score
     }
 
     public string GetKey(CacheDataKey keys) { return keys.ToString(); }
@@ -26,6 +30,18 @@ public class CacheData : SingletonClass<CacheData>
     {
         get { return GetValue<int>(GetKey(CacheDataKey.HintCount)); }
         set { SetValue(GetKey(CacheDataKey.HintCount), value); }
+    }
+
+    public int CurrentStage
+    {
+        get { return GetValue<int>(GetKey(CacheDataKey.CurrentStage)); }
+        set { SetValue(GetKey(CacheDataKey.CurrentStage), value); }
+    }
+
+    public int LastStage
+    {
+        get { return GetValue<int>(GetKey(CacheDataKey.LastStage)); }
+        set { SetValue(GetKey(CacheDataKey.LastStage), value); }
     }
 
     public bool SoundOn
@@ -44,6 +60,18 @@ public class CacheData : SingletonClass<CacheData>
     {
         get { return !GetValue<bool>(GetKey(CacheDataKey.StartCountdown)); }
         set { SetValue(GetKey(CacheDataKey.StartCountdown), !value); }
+    }
+
+    public string ID
+    {
+        get { return GetValue<string>(GetKey(CacheDataKey.ID)); }
+        set { SetValue(GetKey(CacheDataKey.ID), value); }
+    }
+
+    public string Score
+    {
+        get { return GetValue<string>(GetKey(CacheDataKey.Score)); }
+        set { SetValue(GetKey(CacheDataKey.Score), value); }
     }
 
     public T GetValue<T>(string key)

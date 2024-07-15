@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultLayer : BaseLayerTemplate
+public class ResultLayer : BaseLayer
 {
     #region Inspector
     [SerializeField] Button _nextBtn, _backBtn, _rankingBtn;
@@ -25,13 +25,13 @@ public class ResultLayer : BaseLayerTemplate
     private void OnClickNextButton()
     {
         SoundManager.Instance.Play("button_click");
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Play);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Play);
     }
 
     private void OnClickBackButton()
     {
         SoundManager.Instance.Play("button_click");
-        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.LayerKey_Top);
+        LayerManager.Instance.MoveLayer(LayerManager.LayerKey.Top);
     }
 
     private void ShowResultImage()
@@ -45,6 +45,16 @@ public class ResultLayer : BaseLayerTemplate
         DelayControlClass.Instance.CallAfter(1.0f, () => { _nextBtn.gameObject.SetActive(true); });
     }
 
+    private void SendGameDataToDB()
+    {
+        UserData userdata = new UserData();
+        userdata.UserId = CacheData.Instance.ID;
+        userdata.Score = CacheData.Instance.Score;
+
+        // send game clear time to DB
+        _ = NetWorkManager.Instance.SetUserData(userdata);
+    }
+
     #endregion
 
     #region Public Method
@@ -52,7 +62,7 @@ public class ResultLayer : BaseLayerTemplate
     {
         _nextBtn?.onClick.AddListener(OnClickNextButton);
         _backBtn?.onClick.AddListener(OnClickBackButton);
-        _rankingBtn?.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.DialogKey_Ranking); });
+        _rankingBtn?.onClick.AddListener(()=> { OpenDialog(DialogManager.DialogKey.Ranking); });
     }
 
     public virtual void OnEnable()

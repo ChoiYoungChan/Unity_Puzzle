@@ -17,8 +17,8 @@ public class RemoteDataManager : SingletonClass<RemoteDataManager>
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-        StartCoroutine(Download(_remoteUrl));
+        //DontDestroyOnLoad(gameObject);
+        //StartCoroutine(Download(_remoteUrl));
         // TODO: set current url in inspector
     }
 
@@ -29,8 +29,7 @@ public class RemoteDataManager : SingletonClass<RemoteDataManager>
 
     public void RetryDownload()
     {
-        DontDestroyOnLoad(gameObject);
-        StartCoroutine(Download(_remoteUrl));
+        //StartCoroutine(Download(_remoteUrl));
     }
 
     public RemoteData GetRemoteData()
